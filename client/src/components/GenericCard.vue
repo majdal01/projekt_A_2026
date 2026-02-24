@@ -6,32 +6,26 @@ export default {
 
 <template>
   <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
-    <p>
-      Edit
-      <code>components/HelloWorld.vue</code> to test HMR
-    </p>
-  </div>
+    <header>
+      <slot name="header"></slot>
+    </header>
 
-  <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
-  </p>
-  <p>
-    Learn more about IDE Support for Vue in the
-    <a
-      href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support"
-      target="_blank"
-      >Vue Docs Scaling up Guide</a
-    >.
-  </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+    <main>
+      <slot name="main"></slot>
+    </main>
+
+    <footer>
+      <slot name="footer"></slot>
+    </footer>
+  </div>
 </template>
 
 <style scoped>
-.read-the-docs {
-  color: #888;
+.card {
+  background: #00474B;
+  color: white;
+  width: 350px;
+  padding: 1.5rem;
+  border-radius: 8px;
 }
 </style>
