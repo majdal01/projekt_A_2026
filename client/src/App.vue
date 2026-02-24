@@ -10,8 +10,8 @@
         <button @click="currentView = 'profile'">Profil</button>
         <button
           v-if="user.role === 'admin'"
-          @click="currentView = 'admin'"
-        >Admin</button>
+          @click="currentView = 'dashboard'"
+        >Dashboard</button>
         <button @click="currentView = 'logout'">Logout</button>
       </nav>
     
