@@ -50,6 +50,7 @@ function login(e) {
         height: 1.5rem;
         min-width: 20rem;
         padding: 0.2rem;
+        font-size: 1.1rem;
     }
     input::placeholder {
         font-size: 1.1rem;
