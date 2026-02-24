@@ -25,15 +25,24 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { ref, onMounted } from "vue"
 import GenericCard from '../components/GenericCard.vue';
 
 //Midlertidig fake data (senere hentes fra Express)
-const users = ref([
-    { username: "admin", role: "admin" },
-    { username: "editor", role: "editor" },
-    { username: "viewer", role: "viewer" }
-])
+const users = ref([])
+
+const token = localStorage.getItem("token")
+
+onMounted(async () => {
+    const response = await fetch("http://localhost:3000/users", {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    })
+
+    const data = await response.json()
+    users.value = data
+})
 
 function updateRole(user) {
     console.log("Opdater rolle:", user)

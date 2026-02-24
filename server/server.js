@@ -12,9 +12,10 @@ app.use(express.json());
 const SECRET = "supersecretkey"
 
 app.post("/login", async (req, res) => {
+  console.log("Login request received")
   const { username, password} = req.body
 
-  const users = JSON.parse(fs.readFileSync(":/users.json"))
+  const users = JSON.parse(fs.readFileSync("./users.json"))
   const user = users.find(u => u.username === username)
 
   if (!user) {

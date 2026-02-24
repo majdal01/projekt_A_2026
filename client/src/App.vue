@@ -33,27 +33,27 @@ import Profile from "./views/Profile.vue";
 import Dashboard from "./views/Dashboard.vue"
 
 const user = ref(null)
+const token = ref(null)
 const currentView = ref("profile")
 
-function handleLogin(credentials) {
-  // senere : fetch til express
-  /*user.value = {
-    username: credentials.username,
-    role: "admin"
-  }*/
-  //midlertidig fake login
-  if (credentials.username === "admin") {
-    user.value = { username: "admin", role: "admin" }
-  } else if (credentials.username === "editor") {
-    user.value = { username: "editor", role: "editor" }
-  } else {
-    user.value = { username: credentials.username, role: "viewer" }
+function handleLogin(data) {
+  token.value = data.token
+  localStorage.setItem("token", data.token)
+
+  // decode token for at få rolle
+  const payload = JSON.parse(atob(data.token.split(".")[1]))
+
+  user.value = {
+    role: payload.role
   }
+
   currentView.value = "profile"
 }
 
 function logout() {
   user.value = null;
+  token.value = null;
+  localStorage.removeItem("token");
   currentView.value = "profile";
 }
 </script>

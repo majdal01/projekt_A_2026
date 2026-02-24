@@ -5,7 +5,7 @@
         </template>
 
         <template #body>
-            <form class="form" @submit="login">
+            <form class="form" @submit="handleLogin">
                 <label for="username">Indtast brugernavn</label>
                 <input v-model="username" placeholder="Brugernavn">
                 <label for="password">Indtast adgangskode</label>
@@ -29,12 +29,31 @@ const password = ref("")
 
 const emit = defineEmits(["login"])
 
-function login(e) {
-    e.preventDefault();
-    emit("login", {
-        username: username.value,
-        password: password.value
-    });
+async function handleLogin() {
+    try {
+        const response = await fetch("http://localhost:3000/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: username.value,
+                password: password.value
+            })
+        })
+
+        const data = await response.json()
+        console.log("Response:", data)
+
+        if (!response.ok) {
+            alert(data.message)
+            return
+        }
+
+        emit("login", data) //sender token videre
+    } catch (error) {
+        console.error(error)
+    }
 }
 
 </script>

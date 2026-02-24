@@ -6,7 +6,7 @@
 
         <template #body>
             <div id="profil-wrapper">
-                <img src="/public/profil.png" alt="profilbillede">
+                <img src="/profil.png" alt="profilbillede">
                 <div id="skillelinje"></div>
                 <div id="profil-oplysninger">
                     <p class="brugernavn">Brugernavn: </p>
