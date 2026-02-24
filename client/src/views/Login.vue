@@ -1,15 +1,21 @@
 <template>
     <GenericCard>
-        <template #header>Login</template>
+        <template #header>
+            <h1>Login</h1>
+        </template>
 
         <template #body>
-            <input v-model="username" placeholder="Brugernavn">
-            <input v-model="password" type="password" placeholder="Password">
-            <button @click="login">Login</button>
+            <form class="form" @submit="login">
+                <label for="username">Indtast brugernavn</label>
+                <input v-model="username" placeholder="Brugernavn">
+                <label for="password">Indtast adgangskode</label>
+                <input v-model="password" type="password" placeholder="Adgangskode">
+                <button type="submit">Login</button>
+            </form>
         </template>
         
         <template #footer>
-            Indtast dine oplysninger
+            <p class="footer">@2026</p>
         </template>
     </GenericCard>
 </template>
@@ -23,15 +29,35 @@ const password = ref("")
 
 const emit = defineEmits(["login"])
 
-function login() {
+function login(e) {
+    e.preventDefault();
     emit("login", {
         username: username.value,
         password: password.value
-    })
+    });
 }
 
 </script>
 
 <style scoped>
+   .form {
+    display: inline-flex;
+    flex-direction: column;
+    text-align: left;
 
+    input {
+        margin-bottom: 1.5rem;
+        height: 1.5rem;
+        min-width: 20rem;
+        padding: 0.2rem;
+    }
+    input::placeholder {
+        font-size: 1.1rem;
+        align-self: center;
+        
+    }
+   }
+   .footer {
+    margin-top: 2rem;
+   }
 </style>
