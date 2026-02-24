@@ -46,7 +46,8 @@ function handleLogin(data) {
   const payload = JSON.parse(atob(data.token.split(".")[1]))
 
   user.value = {
-    role: payload.role
+    role: payload.role,
+    username: payload.username
   }
 
   currentView.value = "profile"
