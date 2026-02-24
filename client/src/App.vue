@@ -1,18 +1,63 @@
-<script setup>
-import HelloWorld from './components/GenericCard.vue'
-</script>
-
 <template>
   <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+
+    <Login
+      v-if="!user"
+      @login="handleLogin"
+    />
+
+    <Profile
+      v-if="user"
+      :user="user"
+    />
+
+    <Admin
+      v-if="user && user.role === 'admin'"
+    />
+
+    <button v-if="user" @click="logout">
+      Logout
+    </button>
+
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
+
+<script>
+import Login from "./views/Login.vue";
+import Profile from "./views/Profile.vue";
+import Admin from "./views/Admin.vue";
+
+export default {
+  components: {
+    Login,
+    Profile,
+    Admin
+  },
+  data() {
+    return {
+      user: null
+    }
+  },
+  methods: {
+    handleLogin(credentials) {
+      //Midlertidig fake login
+      if (credentials.username === "admin") {
+        this.user = { username: "admin", role: "admin" }
+      }
+      else if (credentials.username === "editor") {
+        this.user = { username: "editor", role: "editor"}
+      }
+      else {
+        this.user = { username: credentials.username, role: "viewer"}
+      }
+    },
+    logout() {
+      this.user = null
+    }
+  }
+}
+</script>
+
 
 <style scoped>
 .logo {

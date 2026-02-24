@@ -1,9 +1,3 @@
-<script setup>
-export default {
-  name: "GenericCard"
-}
-</script>
-
 <template>
   <div class="card">
     <header>
@@ -19,6 +13,12 @@ export default {
     </footer>
   </div>
 </template>
+
+<script>
+export default {
+  name: "GenericCard"
+}
+</script>
 
 <style scoped>
 .card {
