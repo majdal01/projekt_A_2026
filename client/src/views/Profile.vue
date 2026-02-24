@@ -6,16 +6,19 @@
 
         <template #body>
             <div id="profil-wrapper">
-                <img src="#" alt="profilbillede">
+                <img src="/public/profil.png" alt="profilbillede">
+                <div id="skillelinje"></div>
                 <div id="profil-oplysninger">
-                    <p>Brugernavn: {{ user.username }}</p>
-                    <p>Rolle: {{ user.role }}</p>
+                    <p class="brugernavn">Brugernavn: </p>
+                    <p class="bruger">{{ user.username }}</p>
+                    <p class="brugernavn">Rolle: </p>
+                    <p class="bruger">{{ user.role }}</p>
                 </div>
             </div>
         </template>
         
         <template #footer>
-            <p>Du er nu logget ind</p>
+            <p id="footer">Du er nu logget ind 😊</p>
         </template>
     </GenericCard>
 </template>
@@ -33,26 +36,35 @@ h1 {
     font-size: 1.4rem;
 }
 #profil-wrapper {
-    background-color: #028a92;
-    padding: 0.8rem;
+    background-color: #00666c;
+    padding: 0.6rem 1.2rem;
     border-radius: 5px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    img {
+        width: 20%;
+    }
 }
 #profil-oplysninger {
-    position: relative;
+
+    .brugernavn {
+        margin-bottom: 0;
+        font-weight: 600;
+    }
+    .bruger {
+        margin-top: 0;
+    }
 }
-#profil-oplysninger::before {
-    content: "";
-    display: block;
-    position: absolute;
-    left: -20px;
-    top: 10px;
-    height: calc(100% - 20px);
+#skillelinje {
+    height: 100px;
     width: 2px;
     background: white;
     border-radius: 2px;
+}
+#footer {
+    margin-top: 2rem;
 }
 
 </style>
