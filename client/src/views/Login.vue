@@ -14,7 +14,7 @@
     </GenericCard>
 </template>
 
-<script setup>
+<script>
 import GenericCard from '../components/GenericCard.vue';
 
 export default {
