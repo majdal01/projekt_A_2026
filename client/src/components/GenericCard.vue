@@ -5,7 +5,7 @@
     </header>
 
     <main>
-      <slot name="main"></slot>
+      <slot name="body"></slot>
     </main>
 
     <footer>
@@ -14,10 +14,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "GenericCard"
-}
+<script setup>
+
 </script>
 
 <style scoped>

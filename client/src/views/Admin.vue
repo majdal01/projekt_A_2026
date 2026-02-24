@@ -5,7 +5,7 @@
         </template>
 
         <template #body>
-            <p>Kun admins må se dette.</p>
+            <p>Kun admins kan se dette.</p>
         </template>
 
         <template #footer>
@@ -14,12 +14,8 @@
     </GenericCard>
 </template>
 
-<script>
+<script setup>
 import GenericCard from '../components/GenericCard.vue';
-
-export default {
-    components: { GenericCard }
-}
 
 </script>
 

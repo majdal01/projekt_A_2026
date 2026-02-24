@@ -14,25 +14,20 @@
     </GenericCard>
 </template>
 
-<script>
-import GenericCard from '../components/GenericCard.vue';
+<script setup>
+import { ref } from "vue"
+import GenericCard from '../components/GenericCard.vue'
 
-export default {
-    components: { GenericCard },
-    data() {
-        return {
-            username: "",
-            password: ""
-        }
-    },
-    methods: {
-        login() {
-            this.$emit("login", {
-                username: this.username, 
-                password: this.password
-            })
-        }
-    }
+const username = ref("")
+const password = ref("")
+
+const emit = defineEmits(["login"])
+
+function login() {
+    emit("login", {
+        username: username.value,
+        password: password.value
+    })
 }
 
 </script>

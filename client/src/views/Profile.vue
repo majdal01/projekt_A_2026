@@ -5,25 +5,24 @@
         </template>
 
         <template #body>
-            <p>Brugernavn: {{ useReducer.username }}</p>
+            <p>Brugernavn: {{ user.username }}</p>
             <p>Rolle: {{ user.role }}</p>
         </template>
         
         <template #footer>
-            Kun synlig når man er logget ind
+            Du er logget ind
         </template>
     </GenericCard>
 </template>
 
-<script>
+<script setup>
 import GenericCard from '../components/GenericCard.vue';
 
-export default {
-    props: ["user"],
-    components: { GenericCard }
-}
+defineProps ({
+    user: Object
+})
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>
