@@ -2,19 +2,19 @@
     {
         "id": 1, 
         "username": "admin",
-        "password": "25jlkfsuji435#",
+        "password": "$2b$10$ZjaKYqx45vCyRX7cm4Yiwe.oW5p1SzBMmZcC2L8BqofzOXIkNE/ve", 
         "role": "admin"
     },
     {
         "id": 2, 
         "username": "editor",
-        "password": "25jlkfsuji435#",
+        "password": "$2b$10$VfJoozw1MDGjPBm.65k86.Ld1HYithsjsZunK8e11f0Zac47m.Yoi", 
         "role": "editor"
     },
     {
         "id": 3, 
         "username": "viewer",
-        "password": "25jlkfsuji435#",
+        "password": "$2b$10$LyG4cHzOOw3SbLDckZ8wk.1BTp0luaqmSOVCjhC2cu78EE31gOHvy",
         "role": "viewer"
     }
 ]

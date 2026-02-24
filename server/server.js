@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs")
+const bcrypt = require("bcrypt")
 const { authenticate, authorize } = require("./middleware/auth")
 
 const app = express();
@@ -22,7 +22,12 @@ app.post("/login", async (req, res) => {
     return res.status(401).json({ message: "Bruger ikke fundet" })
   }
 
-  //Midlertidig spring password-check over
+  const validPassword = await bcrypt.compare(password, user.password)
+
+  if (!validPassword) {
+    return res.status(401).json({ message: "Forkert adgangskode" })
+  }
+  
   const token = jwt.sign(
     { id:user.id, role: user.role },
     SECRET,
