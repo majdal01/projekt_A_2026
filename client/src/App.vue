@@ -36,6 +36,8 @@ const user = ref(null)
 const token = ref(null)
 const currentView = ref("profile")
 
+console.log("User before:", user.value)
+
 function handleLogin(data) {
   token.value = data.token
   localStorage.setItem("token", data.token)
@@ -48,6 +50,8 @@ function handleLogin(data) {
   }
 
   currentView.value = "profile"
+
+  console.log("Decoded payload:", payload)
 }
 
 function logout() {

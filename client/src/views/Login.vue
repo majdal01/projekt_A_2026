@@ -5,7 +5,7 @@
         </template>
 
         <template #body>
-            <form class="form" @submit="handleLogin">
+            <form class="form" @submit.prevent="handleLogin">
                 <label for="username">Indtast brugernavn</label>
                 <input v-model="username" placeholder="Brugernavn">
                 <label for="password">Indtast adgangskode</label>
