@@ -27,7 +27,7 @@ app.post("/login", async (req, res) => {
   if (!validPassword) {
     return res.status(401).json({ message: "Forkert adgangskode" })
   }
-  
+
   const token = jwt.sign(
     { id:user.id, role: user.role },
     SECRET,
@@ -46,7 +46,7 @@ app.put("/users/:id", authenticate, authorize("admin"), (req, res) => {
   const { role } = req.body
   const users = JSON.parse(fs.readFileSync("./users.json"))
 
-  const user = user.find(u => u.id == req.params.id)
+  const user = users.find(u => u.id == req.params.id)
   if (!user) {
     return res.status(404).json({ message: "User not found" })
   }
