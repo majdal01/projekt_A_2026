@@ -4,11 +4,30 @@
   <div class="container">
     <Login v-if="!user" @login="handleLogin" />
 
-    <Profile v-if="user" :user="user" />
+    <div v-if="user">
 
-    <Admin v-if="user && user.role === 'admin'" />
+      <nav>
+        <button @click="currentView = 'profile'">Profil</button>
+        <button
+          v-if="user.role === 'admin'"
+          @click="currentView = 'admin'"
+        >Admin</button>
+        <button @click="currentView = 'logout'">Logout</button>
+      </nav>
+    
+    <Profile v-if="currentView === 'profile'" :user="user" />
 
-    <button v-if="user" @click="logout">Logout</button>
+    <Admin v-if="currentView === 'admin'" />
+
+    <GenericCard v-if="currentView === 'logout'">
+      <template #header>Logget ud</template>
+      <template #body>
+        <p>Du er nu logget ud.</p>
+        <button @click="logout">Gå til login</button>
+      </template>
+      <template #footer>Tak for besøget</template>
+    </GenericCard>
+    </div>
   </div>
 </template>
 
@@ -17,10 +36,12 @@ import { ref } from "vue"
 import Login from "./views/Login.vue";
 import Profile from "./views/Profile.vue";
 import Admin from "./views/Admin.vue";
+import GenericCard from "./components/GenericCard.vue";
 
 const user = ref(null)
+const currentView = ref("profile")
 
-async function handleLogin(credentials) {
+function handleLogin(credentials) {
   // senere : fetch til express
   /*user.value = {
     username: credentials.username,
@@ -34,10 +55,12 @@ async function handleLogin(credentials) {
   } else {
     user.value = { username: credentials.username, role: "viewer" }
   }
+  currentView.value = "profile"
 }
 
 function logout() {
   user.value = null
+  currentView.value = "profile"
 }
 </script>
 
