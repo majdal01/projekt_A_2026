@@ -63,6 +63,16 @@ app.put("/users/:id", authenticate, authorize("admin"), (req, res) => {
   }
 
   user.role = role
+
+//Tjek at mindst én admin findes
+  const hasAdmin = users.some(u => u.role === "admin")
+
+  if (!hasAdmin) {
+    return res.status(400).json({
+      message: "Systemet skal have mindst én administrator"
+    })
+  }
+
   fs.writeFileSync("./users.json", JSON.stringify(users, null, 2))
 
   res.json({ message: "Role updated" })
