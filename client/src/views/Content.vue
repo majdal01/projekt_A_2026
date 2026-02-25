@@ -5,11 +5,11 @@
         </template>
 
         <template #body>
-            <textarea v-model="content" :readonly="user.role === 'viewer'"></textarea>
+            <textarea v-model="content" :readonly="!canEdit"></textarea>
         </template>
 
         <template #footer>
-            <button v-if="user.role === 'admin' || user.role === 'editor'" @click="saveContent">
+            <button @click="saveContent" :disabled="!canEdit">
                 Gem ændringer
             </button>
         </template>        
@@ -18,13 +18,17 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue"
+import { ref, onMounted, computed } from "vue"
 import GenericCard from "../components/GenericCard.vue"
 
 const content = ref("")
 
-defineProps({
+const props = defineProps({
     user: Object
+})
+
+const canEdit = computed(() => {
+    return props.user?.role === "admin" || props.user?.role === "editor"
 })
 
 onMounted(async () => {
@@ -41,6 +45,7 @@ onMounted(async () => {
 })
 
 async function saveContent() {
+    console.log("Saving as:", props.user?.role)
     const token = localStorage.getItem("token")
 
     await fetch("http://localhost:3000/content", {
@@ -56,5 +61,8 @@ async function saveContent() {
 </script>
 
 <style scoped>
-
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
 </style>

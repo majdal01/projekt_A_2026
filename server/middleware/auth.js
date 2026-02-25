@@ -20,9 +20,9 @@ function authenticate(req, res, next) {
     }
 }
 
-function authorize(role) {
+function authorize(...allowedRoles) {
     return (req, res, next) => {
-        if (req.user.role !== role) {
+        if (!allowedRoles.includes(req.user.role)) {
             return res.status(403).json({ message: "Access denied" })
         }
         next()
