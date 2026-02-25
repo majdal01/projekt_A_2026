@@ -48,6 +48,11 @@ app.get("/users", authenticate, authorize("admin"), (req, res) => {
   res.json(safeUsers)
 })
 
+app.get("/content", authenticate, (req, res) => {
+  const content = JSON.parse(fs.readFileSync("./content.json"))
+  res.json(content)
+})
+
 app.put("/users/:id", authenticate, authorize("admin"), (req, res) => {
   const { role } = req.body
   const users = JSON.parse(fs.readFileSync("./users.json"))
@@ -61,6 +66,17 @@ app.put("/users/:id", authenticate, authorize("admin"), (req, res) => {
   fs.writeFileSync("./users.json", JSON.stringify(users, null, 2))
 
   res.json({ message: "Role updated" })
+})
+
+app.put("/content", authenticate, authorize("admin", "editor"), (req, res) => {
+  const { text } = req.body
+
+  fs.writeFileSync(
+    "./content.json",
+    JSON.stringify({ text }, null, 2)
+  )
+
+  res.json({ message: "Content updated" })
 })
 
 app.listen(3000, () => {

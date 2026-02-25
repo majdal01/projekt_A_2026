@@ -33,7 +33,7 @@ const users = ref([])
 onMounted(async () => {
     const token = localStorage.getItem("token")
 
-    const res = await fetch("http://localhost:3000/users", {
+    const response = await fetch("http://localhost:3000/users", {
         headers: {
             Authorization: `Bearer ${token}`
         }

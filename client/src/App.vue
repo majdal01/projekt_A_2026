@@ -14,14 +14,16 @@
         <button
           v-if="user.role === 'admin'"
           @click="currentView = 'dashboard'"
-          :class="{ active: currentView === 'dashboard' }"
         >Dashboard</button>
+        <button @click="currentView = 'content'">Tekst</button>
         <button @click="logout">Logout</button>
       </nav>
     
       <Profile v-if="currentView === 'profile'" :user="user" />
 
       <Dashboard v-if="currentView === 'dashboard'" />
+
+      <Content v-if="currentView === 'content'" :user="user" />
     </div>
   </div>
 </template>
@@ -31,6 +33,7 @@ import { ref } from "vue"
 import Login from "./views/Login.vue";
 import Profile from "./views/Profile.vue";
 import Dashboard from "./views/Dashboard.vue"
+import Content from "./views/Content.vue";
 
 const user = ref(null)
 const token = ref(null)
