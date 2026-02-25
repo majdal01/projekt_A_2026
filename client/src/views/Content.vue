@@ -5,7 +5,7 @@
         </template>
 
         <template #body>
-            <textarea v-model="content"></textarea>
+            <textarea v-model="content" :readonly="user.role === 'viewer'"></textarea>
         </template>
 
         <template #footer>

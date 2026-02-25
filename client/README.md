@@ -2,15 +2,15 @@
 
 Login kan testes med følgende:
  
-        "username": "admin",
+        "username": "Sofie",
         "password": "derer20fårpåmarken", 
         "role": "admin"
 
-        "username": "editor",
+        "username": "Mads",
         "password": "5fiskihavetsvømmer", 
         "role": "editor"
 
-        "username": "viewer",
+        "username": "Karen",
         "password": "jegser10fuglepåtaget",
         "role": "viewer"
 
