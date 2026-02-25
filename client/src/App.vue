@@ -13,9 +13,10 @@
         >Profil</button>
         <button
           v-if="user.role === 'admin'"
-          @click="currentView = 'dashboard'"
+          @click="currentView = 'dashboard'" 
+          :class="{ active: currentView === 'dashboard' }"
         >Dashboard</button>
-        <button @click="currentView = 'content'">Tekst</button>
+        <button @click="currentView = 'content'" :class="{ active: currentView === 'content' }">Tekst</button>
         <button @click="logout">Logout</button>
       </nav>
     
