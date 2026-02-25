@@ -39,7 +39,13 @@ app.post("/login", async (req, res) => {
 
 app.get("/users", authenticate, authorize("admin"), (req, res) => {
   const users = JSON.parse(fs.readFileSync("./users.json"))
-  res.json(users)
+
+  const safeUsers = users.map(u => ({
+    id: u.id,
+    username: u.username,
+    role: u.role
+  }))
+  res.json(safeUsers)
 })
 
 app.put("/users/:id", authenticate, authorize("admin"), (req, res) => {

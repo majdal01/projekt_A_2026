@@ -6,13 +6,13 @@
 
         <template #body>
             <div id="dashboard-wrapper">
-                <div v-for="user in users" :key="user.username">
-                    <p> {{ user.username }} - Rolle: {{ user.role }}</p>
+                <div v-for="user in users" :key="user.id">
+                    <p> {{ user.username }} </p>
 
-                    <select v-model="user.role" @change="updateSourceFile(user)">
-                        <option value="admin">admin</option>
-                        <option value="editor">editor</option>
-                        <option value="viewer">viewer</option>
+                    <select v-model="user.role" @change="updateRole(user)">
+                        <option value="admin">Admin</option>
+                        <option value="editor">Editor</option>
+                        <option value="viewer">Viewer</option>
                     </select>
                 </div>
             </div>
@@ -28,27 +28,31 @@
 import { ref, onMounted } from "vue"
 import GenericCard from '../components/GenericCard.vue';
 
-//Midlertidig fake data (senere hentes fra Express)
 const users = ref([])
 
-const token = localStorage.getItem("token")
-
 onMounted(async () => {
-    const response = await fetch("http://localhost:3000/users", {
+    const token = localStorage.getItem("token")
+
+    const res = await fetch("http://localhost:3000/users", {
         headers: {
-            Authorization: "Bearer " + token
+            Authorization: `Bearer ${token}`
         }
     })
 
-    const data = await response.json()
-    users.value = data
+    users.value = await response.json()
 })
 
-function updateRole(user) {
-    console.log("Opdater rolle:", user)
+async function updateRole(user) {
+    const token = localStorage.getItem("token")
 
-    //Senere:
-    //fetch("/update-role", { ... })
+    await fetch(`http://localhost:3000/users/${user.id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ role: user.role })
+    })
 }
 
 </script>
