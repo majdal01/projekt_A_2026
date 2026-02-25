@@ -15,6 +15,8 @@
                         <option value="viewer">Viewer</option>
                     </select>
                 </div>
+                <button @click="saveChanges">Gem ændringer</button>
+                <p v-if="error">{{ error }}</p>
             </div>
         </template>
 
@@ -29,6 +31,8 @@ import { ref, onMounted } from "vue"
 import GenericCard from '../components/GenericCard.vue';
 
 const users = ref([])
+const originalUsers = ref([]) // gem original til sammenligning
+const error = ref("")
 
 onMounted(async () => {
     const token = localStorage.getItem("token")
@@ -39,20 +43,41 @@ onMounted(async () => {
         }
     })
 
-    users.value = await response.json()
+    const data = await response.json()
+
+    users.value = JSON.parse(JSON.stringify(data)) // kopi
+    originalUsers.value = data
 })
 
-async function updateRole(user) {
+async function saveChanges() {
+    error.value = ""
+
+    // Tjek om mindst én admin findes
+    const hasAdmin = users.value.some(u => u.role === "admin")
+
+    if (!hasAdmin) {
+        error.value = "Der skal være mindst én administrator."
+        return
+    }
+
     const token = localStorage.getItem("token")
 
-    await fetch(`http://localhost:3000/users/${user.id}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ role: user.role })
-    })
+    for (const user of users.value) {
+        const original = originalUsers.value.find(u => u.id === user.id)
+
+        if (original.role !== user.role) {
+            await fetch(`http://localhost:3000/users/${user.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({ role: user.role })
+            })
+        }
+    }
+
+    originalUsers.value = JSON.parse(JSON.stringify(users.value))
 }
 
 </script>
