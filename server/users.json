@@ -3,13 +3,13 @@
     "id": 1,
     "username": "Sofie",
     "password": "$2b$10$ZjaKYqx45vCyRX7cm4Yiwe.oW5p1SzBMmZcC2L8BqofzOXIkNE/ve",
-    "role": "editor"
+    "role": "admin"
   },
   {
     "id": 2,
     "username": "Mads",
     "password": "$2b$10$OnDlOmzWkNMNLgmu4w9r9O9etg8byP8tpfAV/OZ7eYMne5EtmJN9q",
-    "role": "admin"
+    "role": "editor"
   },
   {
     "id": 3,
