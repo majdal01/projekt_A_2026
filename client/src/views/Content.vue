@@ -1,11 +1,12 @@
 <template>
     <GenericCard>
         <template #header>
-            <h2>Tekst eksempel</h2>
+            <h1>Tekst eksempel</h1>
         </template>
 
         <template #body>
-            <textarea v-model="content" :readonly="!canEdit"></textarea>
+            <label for="content-textarea" class="sr-only">Indhold:</label>
+            <textarea id="content-textarea" v-model="content" :readonly="!canEdit"></textarea>
         </template>
 
         <template #footer>
@@ -18,35 +19,35 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue"
-import GenericCard from "../components/GenericCard.vue"
+import { ref, onMounted, computed } from "vue"; // Importer computed for at beregne redigeringstilladelse og onMounted for at hente indhold ved komponentens oprettelse
+import GenericCard from "../components/GenericCard.vue";
 
-const content = ref("")
+const content = ref(""); // Reaktiv variabel til at holde indholdet af textarea'en
 
-const props = defineProps({
+const props = defineProps({ // Definer props for at modtage brugerdata fra forælderen
     user: Object
-})
+});
 
 const canEdit = computed(() => {
-    return props.user?.role === "admin" || props.user?.role === "editor"
-})
+    return props.user?.role === "admin" || props.user?.role === "editor";
+});
 
 onMounted(async () => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
 
     const res = await fetch("http://localhost:3000/content", {
         headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}` // Inkluder token i headeren for at autentificere anmodningen. Bearer-token bruges til at identificere og autorisere brugeren på serveren, så kun godkendte brugere kan hente indholdet.
         }
-    })
+    });
 
-    const data = await res.json()
-    content.value = data.text
-})
+    const data = await res.json();
+    content.value = data.text;
+});
 
 async function saveContent() {
-    console.log("Saving as:", props.user?.role)
-    const token = localStorage.getItem("token")
+    console.log("Saving as:", props.user?.role);
+    const token = localStorage.getItem("token");
 
     await fetch("http://localhost:3000/content", {
         method: "PUT",
@@ -55,12 +56,26 @@ async function saveContent() {
             Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({ text: content.value })
-    })
+    });
 }
 
 </script>
 
 <style scoped>
+h1 {
+    font-size: 1.4rem;
+}
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
 button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
