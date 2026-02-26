@@ -15,7 +15,8 @@
         </template>
         
         <template #footer>
-            <p class="footer">@2026</p>
+            <p class="footer">Har du ikke en bruger?</p>
+            <button @click="$emit('show-register')">Opret her</button>
         </template>
     </GenericCard>
 </template>
@@ -50,7 +51,7 @@ async function handleLogin() {
             return
         }
 
-        emit("login", data) //sender token videre
+        emit("login-success", data) //sender token videre
     } catch (error) {
         console.error(error)
     }

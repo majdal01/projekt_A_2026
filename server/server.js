@@ -17,11 +17,11 @@ app.post("/register", async (req, res) => {
     return res.status(400).json({ message: "Udfyld alle felter" })
   }
 
-  const users = JSON.parse(fs.readFileSync("./user.json"))
+  const users = JSON.parse(fs.readFileSync("./users.json"))
 
   const existingUser = users.find(u => u.username === username)
 
-  if (existinUser) {
+  if (existingUser) {
     return res.status(400).json({ message: "Bruger findes allerede" })
   }
 

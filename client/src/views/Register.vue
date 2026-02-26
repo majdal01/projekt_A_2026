@@ -18,6 +18,8 @@
         
         <template #footer>
             <p v-if="message">{{ message }}</p>
+            <p>Har du allerede en bruger?</p>
+            <button @click="emit('show-login')">Tilbage til login</button>
         </template>
     </GenericCard>
 </template>
@@ -30,7 +32,10 @@ const username = ref("")
 const password = ref("")
 const message = ref("")
 
+const emit = defineEmits(["show-login"])
+
 async function register() {
+    console.log("Register clicked")
     const res = await fetch("http://localhost:3000/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -41,8 +46,17 @@ async function register() {
     })
 
     const data = await res.json()
-    message.value = data.message
+
+    if (res.ok) {
+        alert("Bruger oprettet! Log ind.")
+        emit("show-login")
+    } else {
+        message.value = data.message
+    }
+
 }
+
+
 
 </script>
 

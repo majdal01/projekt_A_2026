@@ -2,29 +2,32 @@
 
 <template>
   <div class="container">
-    <Login v-if="!user" @login="handleLogin" />
+    <Login v-if="currentView === 'login'" @login-success="handleLogin" @show-register="showRegister" />
+    <Register v-else-if="currentView === 'register'" @show-login="showLogin" />
 
-    <div v-if="user">
+    <div v-else>
+      <div v-if="user">
 
-      <nav>
-        <button
-          @click="currentView = 'profile'"
-          :class="{ active: currentView === 'profile' }"
-        >Profil</button>
-        <button
-          v-if="user.role === 'admin'"
-          @click="currentView = 'dashboard'" 
-          :class="{ active: currentView === 'dashboard' }"
-        >Dashboard</button>
-        <button @click="currentView = 'content'" :class="{ active: currentView === 'content' }">Tekst</button>
-        <button @click="logout">Logout</button>
-      </nav>
-    
-      <Profile v-if="currentView === 'profile'" :user="user" />
+        <nav>
+          <button
+            @click="currentView = 'profile'"
+            :class="{ active: currentView === 'profile' }"
+          >Profil</button>
+          <button
+            v-if="user.role === 'admin'"
+            @click="currentView = 'dashboard'" 
+            :class="{ active: currentView === 'dashboard' }"
+          >Dashboard</button>
+          <button @click="currentView = 'content'" :class="{ active: currentView === 'content' }">Tekst</button>
+          <button @click="logout">Logout</button>
+        </nav>
+      
+        <Profile v-if="currentView === 'profile'" :user="user" />
 
-      <Dashboard v-if="currentView === 'dashboard'" />
+        <Dashboard v-if="currentView === 'dashboard'" />
 
-      <Content v-if="currentView === 'content'" :user="user" />
+        <Content v-if="currentView === 'content'" :user="user" />
+      </div>
     </div>
   </div>
 </template>
@@ -32,17 +35,28 @@
 <script setup>
 import { ref } from "vue"
 import Login from "./views/Login.vue";
+import Register from "./views/Register.vue";
 import Profile from "./views/Profile.vue";
 import Dashboard from "./views/Dashboard.vue"
 import Content from "./views/Content.vue";
 
 const user = ref(null)
 const token = ref(null)
-const currentView = ref("profile")
+const currentView = ref("login")
 
 console.log("User before:", user.value)
 
+function showRegister() {
+  currentView.value = "register"
+}
+
+function showLogin() {
+  currentView.value = "login"
+}
+
 function handleLogin(data) {
+  console.log("Login success triggered")
+  console.log("Token:", data.token)
   token.value = data.token
   localStorage.setItem("token", data.token)
 
@@ -63,7 +77,7 @@ function logout() {
   user.value = null;
   token.value = null;
   localStorage.removeItem("token");
-  currentView.value = "profile";
+  currentView.value = "login";
 }
 </script>
 
