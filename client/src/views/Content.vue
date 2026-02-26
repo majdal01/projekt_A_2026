@@ -76,6 +76,17 @@ h1 {
     white-space: nowrap;
     border: 0;
 }
+#content-textarea {
+    width: 100%;
+    height: 8rem;
+    padding: 0.5rem;
+    font-size: 1.1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+}
 button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
