@@ -5,16 +5,17 @@
         </template>
 
         <template #body>
-            <div id="profil-wrapper">
+            <section id="profil-wrapper">
                 <img src="/profil.png" alt="profilbillede">
                 <div id="skillelinje"></div>
-                <div id="profil-oplysninger">
-                    <p class="brugernavn">Brugernavn: </p>
-                    <p class="bruger">{{ user.username }}</p>
-                    <p class="brugernavn">Rolle: </p>
-                    <p class="bruger">{{ user.role }}</p>
-                </div>
-            </div>
+
+                <dl id="profil-oplysninger">
+                    <dt class="brugernavn">Brugernavn: </dt>
+                    <dd class="bruger">{{ user.username }}</dd>
+                    <dt class="brugernavn">Rolle: </dt>
+                    <dd class="bruger">{{ user.role }}</dd>
+                </dl>
+            </section>
         </template>
         
         <template #footer>
@@ -28,7 +29,8 @@ import GenericCard from '../components/GenericCard.vue';
 
 defineProps ({
     user: Object
-})
+});
+
 </script>
 
 <style scoped>
@@ -37,7 +39,7 @@ h1 {
 }
 #profil-wrapper {
     background-color: #00666c;
-    padding: 0.6rem 1.2rem;
+    padding: 1.5rem 1.2rem;
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -48,13 +50,19 @@ h1 {
     }
 }
 #profil-oplysninger {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
 
     .brugernavn {
-        margin-bottom: 0;
+        font-size: 1.2rem;
+        margin:0;
         font-weight: 600;
     }
     .bruger {
-        margin-top: 0;
+        font-size: 1.1rem;
+        margin: 0 0 0.5rem 0;
     }
 }
 #skillelinje {
