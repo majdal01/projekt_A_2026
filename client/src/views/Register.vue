@@ -44,7 +44,7 @@ const username = ref("");
 const password = ref("");
 const message = ref("");
 
-const emit = defineEmits(["show-login"]);
+const emit = defineEmits(["show-login"]); // Emit til at signalere til parent-komponenten, at vi vil skifte tilbage til login-skærmen
 
 async function register() {
     console.log("Register clicked");

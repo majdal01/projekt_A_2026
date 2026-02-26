@@ -1,8 +1,8 @@
-<!--Styrer login og roller-->
-
 <template>
   <div class="container">
+
     <Login v-if="currentView === 'login'" @login-success="handleLogin" @show-register="showRegister" />
+
     <Register v-else-if="currentView === 'register'" @show-login="showLogin" />
 
     <div v-else>
@@ -12,13 +12,25 @@
           <button
             @click="currentView = 'profile'"
             :class="{ active: currentView === 'profile' }"
-          >Profil</button>
+          >
+            Profil
+          </button>
+
           <button
             v-if="user.role === 'admin'"
             @click="currentView = 'dashboard'" 
             :class="{ active: currentView === 'dashboard' }"
-          >Dashboard</button>
-          <button @click="currentView = 'content'" :class="{ active: currentView === 'content' }">Tekst</button>
+          >
+            Dashboard
+          </button>
+
+          <button 
+            @click="currentView = 'content'" 
+            :class="{ active: currentView === 'content' }"
+          >
+            Tekst
+          </button>
+
           <button @click="logout">Logout</button>
         </nav>
       
@@ -33,44 +45,44 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { ref } from "vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Profile from "./views/Profile.vue";
-import Dashboard from "./views/Dashboard.vue"
+import Dashboard from "./views/Dashboard.vue";
 import Content from "./views/Content.vue";
 
-const user = ref(null)
-const token = ref(null)
-const currentView = ref("login")
+const user = ref(null);
+const token = ref(null);
+const currentView = ref("login");
 
-console.log("User before:", user.value)
+console.log("User before:", user.value);
 
 function showRegister() {
-  currentView.value = "register"
+  currentView.value = "register";
 }
 
 function showLogin() {
-  currentView.value = "login"
+  currentView.value = "login";
 }
 
 function handleLogin(data) {
-  console.log("Login success triggered")
-  console.log("Token:", data.token)
-  token.value = data.token
-  localStorage.setItem("token", data.token)
+  console.log("Login success triggered");
+  console.log("Token:", data.token);
+  token.value = data.token;
+  localStorage.setItem("token", data.token);
 
   // decode token for at få rolle
-  const payload = JSON.parse(atob(data.token.split(".")[1]))
+  const payload = JSON.parse(atob(data.token.split(".")[1]));
 
   user.value = {
     role: payload.role,
     username: payload.username
-  }
+  };
 
-  currentView.value = "profile"
+  currentView.value = "profile";
 
-  console.log("Decoded payload:", payload)
+  console.log("Decoded payload:", payload);
 }
 
 function logout() {
