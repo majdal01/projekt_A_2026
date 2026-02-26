@@ -1,3 +1,5 @@
+<!--Generisk komponent med header-, body- og footer-slot-->
+
 <template>
   <div class="card">
     <header>
