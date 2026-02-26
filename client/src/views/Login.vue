@@ -7,9 +7,23 @@
         <template #body>
             <form class="form" @submit.prevent="handleLogin">
                 <label for="username">Indtast brugernavn</label>
-                <input v-model="username" placeholder="Brugernavn">
+                <input 
+                    id="username"
+                    v-model="username" 
+                    name="username"
+                    type="text"
+                    autocomplete="username"
+                    placeholder="Brugernavn"
+                >
                 <label for="password">Indtast adgangskode</label>
-                <input v-model="password" type="password" placeholder="Adgangskode">
+                <input 
+                    id="password"
+                    v-model="password" 
+                    name="password"
+                    type="password"
+                    autocomplete="current-password"
+                    placeholder="Adgangskode"
+                >
                 <button type="submit">Login</button>
             </form>
         </template>
@@ -22,38 +36,38 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
-import GenericCard from '../components/GenericCard.vue'
+import { ref } from "vue";
+import GenericCard from '../components/GenericCard.vue';
 
-const username = ref("")
-const password = ref("")
+const username = ref("");
+const password = ref("");
 
-const emit = defineEmits(["login"])
+const emit = defineEmits(["login-success", "show-register"]); // emit er til at sende data videre til parent-komponenten
 
 async function handleLogin() {
     try {
         const response = await fetch("http://localhost:3000/login", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 username: username.value,
                 password: password.value
             })
-        })
+        });
 
-        const data = await response.json()
-        console.log("Response:", data)
+        const data = await response.json();
+        console.log("Response:", data);
 
         if (!response.ok) {
-            alert(data.message)
-            return
+            alert(data.message);
+            return;
         }
 
-        emit("login-success", data) //sender token videre
+        emit("login-success", data); //sender token videre
     } catch (error) {
-        console.error(error)
+        console.error(error);
     }
 }
 
