@@ -16,17 +16,5 @@
     "username": "Karen",
     "password": "$2b$10$LyG4cHzOOw3SbLDckZ8wk.1BTp0luaqmSOVCjhC2cu78EE31gOHvy",
     "role": "viewer"
-  },
-  {
-    "id": 4,
-    "username": "Maja",
-    "password": "$2b$10$tXEucx4gWrYw.rXJzWuphOw6LFCEuVidEs23/JYK7kM3PfslLC8Jq",
-    "role": "viewer"
-  },
-  {
-    "id": 5,
-    "username": "Buller",
-    "password": "$2b$10$xh1FN4AbwdqLfuld/MxikuLbLuki6RnSXxZLTPGO/FQoJY00mhz.2",
-    "role": "viewer"
   }
 ]
