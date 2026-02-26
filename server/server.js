@@ -11,6 +11,36 @@ app.use(express.json());
 
 const SECRET = "supersecretkey"
 
+app.post("/register", async (req, res) => {
+  const { username, password } = req.body
+  if (!username || ! password) {
+    return res.status(400).json({ message: "Udfyld alle felter" })
+  }
+
+  const users = JSON.parse(fs.readFileSync("./user.json"))
+
+  const existingUser = users.find(u => u.username === username)
+
+  if (existinUser) {
+    return res.status(400).json({ message: "Bruger findes allerede" })
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10)
+
+  const newUser = {
+    id: users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1,
+    username, 
+    password: hashedPassword,
+    role: "viewer" // default rolle
+  }
+
+  users.push(newUser)
+
+  fs.writeFileSync("./users.json", JSON.stringify(users, null, 2))
+
+  res.status(201).json({ message: "Bruger oprettet" })
+})
+
 app.post("/login", async (req, res) => {
   console.log("Login request received")
   const { username, password} = req.body
