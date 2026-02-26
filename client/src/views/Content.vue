@@ -13,6 +13,7 @@
             <button @click="saveContent" :disabled="!canEdit">
                 Gem ændringer
             </button>
+            <p v-if="successMessage" class="success-msg">{{ successMessage }}</p>
         </template>        
 
     </GenericCard>  
@@ -23,6 +24,7 @@ import { ref, onMounted, computed } from "vue"; // Importer computed for at bere
 import GenericCard from "../components/GenericCard.vue";
 
 const content = ref(""); // Reaktiv variabel til at holde indholdet af textarea'en
+const successMessage = ref(""); 
 
 const props = defineProps({ // Definer props for at modtage brugerdata fra forælderen
     user: Object
@@ -49,7 +51,7 @@ async function saveContent() {
     console.log("Saving as:", props.user?.role);
     const token = localStorage.getItem("token");
 
-    await fetch("http://localhost:3000/content", {
+    const res = await fetch("http://localhost:3000/content", {
         method: "PUT",
         headers: {
             "Content-Type": "application/json", 
@@ -57,6 +59,13 @@ async function saveContent() {
         },
         body: JSON.stringify({ text: content.value })
     });
+
+    if (res.ok) {
+        successMessage.value = "Ændringerne er gemt!";
+        setTimeout(() => {
+            successMessage.value = "";
+        }, 3000); // Fjern beskeden efter 3 sekunder
+    }
 }
 
 </script>
